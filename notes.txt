@@ -18,3 +18,10 @@
     "react-dom": "^19.1.0"
   }
 }
+
+### DOCKER
+docker build -t nextjs-ups-tracking-app .
+docker run --name nextjs-ups-tracking-app --env-file .env.local -p 3000:3000 nextjs-ups-tracking-app
+docker run --name nextjs-ups-tracking-app --restart unless-stopped --env-file .env.local -p 3000:3000 nextjs-ups-tracking-app
+
+### OR USE DOCKER-COMPOSE.YML FILE

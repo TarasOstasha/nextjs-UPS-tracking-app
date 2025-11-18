@@ -133,7 +133,7 @@ export default async function handler(req, res) {
 
     const tokenData = await tokenRes.json();
     cachedToken = tokenData.access_token;
-    tokenExpiry = Date.now() + (tokenData.expires_in - 60) * 1000; // expires_in is in seconds
+    tokenExpiry = Date.now() + (tokenData.expires_in - 60) * 1000; 
   }
 
   const access_token = cachedToken;
