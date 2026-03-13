@@ -120,6 +120,24 @@ export default function Home() {
               new Date()
             );
             const nice = format(dt, 'Pp');
+
+            // Extract labelCreated date from activity with statusCode "003" (label created)
+            let labelCreatedFormatted = 'N/A';
+            const labelCreatedActivity = pkg?.activity?.find(
+              (act) => act.status.statusCode === '003'
+            );
+            if (labelCreatedActivity?.date && labelCreatedActivity?.time) {
+              try {
+                const labelDt = parse(
+                  `${labelCreatedActivity.date}${labelCreatedActivity.time}`,
+                  'yyyyMMddHHmmss',
+                  new Date()
+                );
+                labelCreatedFormatted = format(labelDt, 'Pp');
+              } catch (e) {
+                console.error('Error parsing labelCreated date:', e);
+              }
+            }
   
             return {
               trackingNumber: tn,
@@ -130,6 +148,7 @@ export default function Home() {
               statusCode: activity.status.statusCode,
               datetime: nice,
               service: pkg?.service?.description || 'N/A',
+              labelCreated: labelCreatedFormatted,
             };
           } catch (e) {
             return { trackingNumber: tn, error: e.message };
@@ -272,6 +291,9 @@ export default function Home() {
                 </p>
                 <p>
                   <strong>Service:</strong> {item.service}
+                </p>
+                <p>
+                  <strong>Label Created:</strong> {item.labelCreated}
                 </p>
               </>
             )}
